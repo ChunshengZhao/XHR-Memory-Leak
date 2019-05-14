@@ -1,0 +1,44 @@
+﻿<html>
+<head>
+<title>XHR Memory Leak</title>
+</head>
+
+<a href="#">#</a>
+
+<script>
+    
+    var isGetDataBusying = false;
+
+    function GetData() {
+        if (isGetDataBusying == true){
+            return;
+        }
+        else{
+            isGetDataBusying = true;
+        }
+        var xhr = null;
+        xhr = new XMLHttpRequest();
+        xhr.open("POST","/test.txt",true);
+        xhr.timeout = 1000;
+        xhr.onload = success;
+        xhr.onloadend = end;
+        xhr.send(null);
+        
+        function success(){
+            if(xhr.status >=200 && xhr.status <300 || xhr.status==304){
+            }
+            else{
+            }
+        }
+        
+        function end(){
+            xhr = null;
+            isGetDataBusying = false;
+        }
+    }
+
+    setInterval(GetData, 2);
+
+</script>
+
+</html>
